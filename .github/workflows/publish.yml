@@ -37,6 +37,9 @@ jobs:
 
         - name: Test
           run: pnpm run test:single --filter=use-disclosable
+
+        - name: Copy README
+          run: cp README.md packages/use-disclosable/README.md
         
         - name: "Publish"
           run: pnpm publish --access public --no-git-checks --filter=use-disclosable
