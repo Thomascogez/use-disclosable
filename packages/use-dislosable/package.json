@@ -26,7 +26,8 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "lint": "eslint .",
-    "test": "vitest",
+    "test:watch": "vitest",
+    "test:single": "vitest run",
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
   },
   "peerDependencies": {

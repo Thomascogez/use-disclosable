@@ -24,6 +24,8 @@
       "cache": false,
       "persistent": true
     },
-    "test": {}
+    "check-exports": {},
+    "test:watch": {},
+    "test:single": {}
   }
 }

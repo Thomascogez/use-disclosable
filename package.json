@@ -4,7 +4,10 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "test": "turbo test",
+    "test:watch": "turbo test:watch",
+    "test:single": "turbo test:single",
+    "check-exports": "turbo check-exports",
+    "check": "turbo check-exports lint",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
