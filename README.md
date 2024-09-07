@@ -1,5 +1,9 @@
 # use-disclosable
 
+<center>
+<img src="https://use-disclosable.thomas-cogez.fr/logo.png" width="200px" />
+</center>
+
 [Documentation](https://use-disclosable.thomas-cogez.fr)
 ----
 `use-disclosable` is a react library that allow to easily manage disclosable elements.
