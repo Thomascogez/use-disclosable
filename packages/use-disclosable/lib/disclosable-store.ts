@@ -12,9 +12,7 @@ export const disclosableStore: DisclosableStore = {
         const disclosableIdentifier = options?.identifier ?? component.name;
 
         if (disclosableIdentifier in disclosableStore.disclosables) {
-            if (disclosableStore.disclosables[disclosableIdentifier].props?.isDisclosableOpen === true) {
-                return;
-            }
+            return;
         }
 
         disclosableStore.disclosablesIndex = disclosableStore.disclosablesIndex + 1;
