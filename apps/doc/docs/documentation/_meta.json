@@ -1,0 +1,11 @@
+[
+    "index",
+    "quick-start",
+    {
+        "type": "dir",
+        "name": "api",
+        "label": "API"
+    },
+    "showcase",
+    "overview"
+]

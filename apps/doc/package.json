@@ -1,0 +1,17 @@
+{
+  "name": "documentation",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "preview": "rspress preview"
+  },
+  "dependencies": {
+    "lucide-react": "^0.438.0",
+    "rspress": "^1.28.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16"
+  }
+}
