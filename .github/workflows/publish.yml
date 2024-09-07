@@ -1,8 +1,8 @@
 name: Ci
 
 on:
-    release:
-        types: [created]
+  release:
+    types: [created]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
