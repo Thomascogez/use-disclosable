@@ -4,6 +4,14 @@
   "version": "0.0.1",
   "type": "module",
   "license": "MIT",
+  "keywords": [
+    "react",
+    "disclosable",
+    "hook",
+    "dialog",
+    "drawer",
+    "modal"
+  ],
   "author": "Thomascogez <thomas.cogez@gmail.com>",
   "homepage": "https://use-disclosable.thomas-cogez.fr",
   "bugs": {
