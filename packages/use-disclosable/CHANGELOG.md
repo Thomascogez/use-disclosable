@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.0.3
+
+### Patch Changes
+
+- e7a3b2e: Fix nextjs build by providing a default getServerSnapshot
+
 ## 0.0.2
 
 ### Patch Changes
