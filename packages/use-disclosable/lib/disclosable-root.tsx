@@ -1,3 +1,5 @@
+"use client";
+
 import { useDisclosable } from "./use-disclosable";
 
 export const DisclosableRoot: React.FC<unknown> = () => {
