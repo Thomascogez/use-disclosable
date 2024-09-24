@@ -17,7 +17,7 @@ It takes an optional object as parameter, which can contain the following proper
 - `destroyAfter`: An optional number indicating the delay in milliseconds before destroying the disclosable.
 
 ## Usage
-```tsx
+```tsx filename="MyDisclosableComponent.tsx"
 import type { DisclosableInjectedProps } from 'use-disclosable';
 import DisclosableComponent from './DisclosableComponent';
 
