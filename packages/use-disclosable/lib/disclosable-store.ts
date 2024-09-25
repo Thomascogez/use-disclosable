@@ -11,7 +11,7 @@ export const disclosableStore: DisclosableStore = {
     openDisclosable: (component, options) => {
         const disclosableIdentifier = options?.identifier ?? component.name;
 
-        if (disclosableIdentifier in disclosableStore.disclosables) {
+        if (!options?.replace && disclosableIdentifier in disclosableStore.disclosables) {
             return;
         }
 

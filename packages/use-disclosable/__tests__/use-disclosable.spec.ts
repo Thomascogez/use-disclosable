@@ -47,6 +47,11 @@ describe('useDisclosable', () => {
         expect(result.current.disclosables[StubDisclosable.name].props).to.have.property('closeDisclosable').to.be.a('function')
     });
 
+    it("should call open on an already opened disclosable and should have no effect", () => {
+        const { result } = renderHook(() => useDisclosable());
+        result.current.open(StubDisclosable);
+    });
+
     it("should call open on a disclosable with a custom identifier", () => {
         const { result } = renderHook(() => useDisclosable());
         result.current.open(StubDisclosable, { identifier: "custom-identifier" });

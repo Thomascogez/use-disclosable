@@ -9,7 +9,7 @@ import type { DisclosableInjectedProps } from "../lib/types";
 
 const StubDisclosable: React.FC<{ testId: string, text?: string } & DisclosableInjectedProps> = ({ testId, text, closeDisclosable }) => {
     return (
-        <div data-testid={testId}>
+        <div className={testId} data-testid={testId}>
             {text}
             <button data-testid="close-button" onClick={() => closeDisclosable()}>Close</button>
         </div>
@@ -169,4 +169,24 @@ describe("disclosable-root", () => {
             expect(screen.queryByTestId("second-disclosable")).toBeNull();
         });
     });
+
+    describe("Open disclosable with replace option", () => {
+        it("should open a disclosable with replace option", () => {
+            const { result } = renderHook(() => useDisclosable());
+            result.current.open(StubDisclosable, { props: { testId: "first-disclosable" }, replace: true });
+        });
+
+        it("should open same disclosable with replace option", () => {
+            const { result } = renderHook(() => useDisclosable());
+            result.current.open(StubDisclosable, { props: { testId: "first-disclosable-replaced" }, replace: true });
+        });
+
+        it("should render disclosable-root with previously opened disclosable", () => {
+            const { container } = render(<DisclosableRoot />)
+
+            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
+            expect(container.getElementsByClassName("first-disclosable")).toHaveLength(0);
+            expect(screen.getByTestId("first-disclosable-replaced")).toBeDefined();
+        });
+    })
 })
