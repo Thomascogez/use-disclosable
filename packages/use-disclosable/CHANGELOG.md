@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.1.0
+
+### Minor Changes
+
+- 439541d: Add `replace` option for use-disclosable open method
+
 ## 0.0.3
 
 ### Patch Changes
