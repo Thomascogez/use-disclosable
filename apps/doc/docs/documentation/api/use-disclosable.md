@@ -10,6 +10,7 @@ Allow to open a disclosable.
 - `options`: An object containing the options for the disclosable.
   - `options.props`: An object containing the props to pass to the disclosable.
   - `options.identifier`: An optional identifier for the disclosable. If not provided, the disclosable will be opened using the component name (usally used to display to component of the same type)
+  - `options.replace`: An optional boolean indicating if the disclosable should be replaced if it's already opened. (default false)
 #### Usage
 ```tsx filename="MyComponent.tsx"
 import { useDisclosable } from 'use-disclosable';
