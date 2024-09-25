@@ -5,7 +5,7 @@ It should be registered once, ideally at the root of your application.
 
 ## Usage
 
-```tsx
+```tsx filename="App.tsx"
 import { DisclosableRoot } from 'use-disclosable';
 
 function App() {

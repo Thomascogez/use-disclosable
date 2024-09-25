@@ -14,7 +14,7 @@ It provide a simple API that allow you to quickly integrate any disclosable elem
 ### Classic approach
 Let's take a look at the following example:
 
-```tsx {5,9}
+```tsx {5,9} filename="MyComponent.tsx"
 import { useState } from 'react';
 import MyDialogElement from './MyDialogElement';
 

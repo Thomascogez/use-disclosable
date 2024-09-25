@@ -10,11 +10,12 @@ Allow to open a disclosable.
 - `options`: An object containing the options for the disclosable.
   - `options.props`: An object containing the props to pass to the disclosable.
   - `options.identifier`: An optional identifier for the disclosable. If not provided, the disclosable will be opened using the component name (usally used to display to component of the same type)
+  - `options.replace`: An optional boolean indicating if the disclosable should be replaced if it's already opened. (default false)
 #### Usage
-```tsx
+```tsx filename="MyComponent.tsx"
 import { useDisclosable } from 'use-disclosable';
 import DisclosableComponent from './DisclosableComponent';
-const App: React.FC = () => {
+const Component: React.FC = () => {
   const { open } = useDisclosable();
 
   return (
@@ -33,10 +34,10 @@ Allow to close an opened disclosable.
   - `options.destroyAfter`: An optional number indicating the delay in milliseconds before destroying the disclosable. (useful for animations)
 
 #### Usage
-```tsx
+```tsx filename="MyComponent.tsx"
 import { useDisclosable } from 'use-disclosable';
 import DisclosableComponent from './DisclosableComponent';
-const App: React.FC = () => {
+const Component: React.FC = () => {
   const { open, close } = useDisclosable();
 
   return (
@@ -59,10 +60,10 @@ Allow to close all opened disclosables.
   - `options.destroyAfter`: An optional number indicating the delay in milliseconds before destroying the disclosable. (useful for animations)
 
 #### Usage
-```tsx
+```tsx filename="MyComponent.tsx"
 import { useDisclosable } from 'use-disclosable';
 import DisclosableComponent from './DisclosableComponent';
-const App: React.FC = () => {
+const Component: React.FC = () => {
   const { open, closeAll } = useDisclosable();
 
   return (
@@ -85,10 +86,10 @@ Allow to set props on an opened disclosable.
 - `props`: An object containing the props to set on the disclosable.
 
 #### Usage
-```tsx
+```tsx filename="MyComponent.tsx"
 import { useDisclosable } from 'use-disclosable';
 import DisclosableComponent from './DisclosableComponent';
-const App: React.FC = () => {
+const Component: React.FC = () => {
   const { open, setProps } = useDisclosable();
 
   return (
@@ -108,7 +109,7 @@ const App: React.FC = () => {
 An object containing all the opened disclosables.
 
 #### Usage
-```tsx
+```tsx filename="MyComponent.tsx"
 import { useDisclosable } from 'use-disclosable';
 import DisclosableComponent from './DisclosableComponent';
 const App: React.FC = () => {

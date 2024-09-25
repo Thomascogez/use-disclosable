@@ -13,7 +13,7 @@ export type Disclosable<T extends AnyReactComponent> = {
 
 export type OpenDisclosableOptions<T extends AnyReactComponent, P = Omit<ComponentProps<T>, keyof DisclosableInjectedProps>> = (
     IsEmptyObject<P> extends true ? { props?: P } : { props: P }
-) & { identifier?: string; dismountOnClose?: boolean };
+) & { identifier?: string; dismountOnClose?: boolean, replace?: boolean };
 
 export type CloseDisclosableOptions = {
     destroyAfter?: number;
