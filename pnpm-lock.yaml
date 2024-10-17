@@ -88,7 +88,7 @@ importers:
         version: 18.3.0
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.2(vite@5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.31.6))
+        version: 4.3.2(vite@5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.36.0))
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.45)
@@ -103,7 +103,7 @@ importers:
         version: 0.4.11(eslint@9.9.1(jiti@1.21.6))
       globals:
         specifier: ^15.9.0
-        version: 15.9.0
+        version: 15.11.0
       postcss:
         specifier: ^8.4.45
         version: 8.4.45
@@ -118,7 +118,7 @@ importers:
         version: 8.4.0(eslint@9.9.1(jiti@1.21.6))(typescript@5.5.4)
       vite:
         specifier: ^5.4.1
-        version: 5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.31.6)
+        version: 5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.36.0)
 
   packages/use-disclosable:
     devDependencies:
@@ -160,7 +160,7 @@ importers:
         version: 0.4.11(eslint@9.9.1(jiti@1.21.6))
       globals:
         specifier: ^15.9.0
-        version: 15.9.0
+        version: 15.11.0
       jsdom:
         specifier: ^25.0.0
         version: 25.0.0
@@ -2325,8 +2325,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.9.0:
-    resolution: {integrity: sha512-SmSKyLLKFbSr6rptvP8izbyxJL4ILwqO9Jg23UA0sDlGlu58V59D1//I3vlc0KJphVdUR7vMjHIplYnzBxorQA==}
+  globals@15.11.0:
+    resolution: {integrity: sha512-yeyNSjdbyVaWurlwCpcA6XNBrHTMIeDdj0/hnvX/OLJ9ekOXYbLsLinH/MucQyGvNnXhidTdNhTtJaffL2sMfw==}
     engines: {node: '>=18'}
 
   globby@11.1.0:
@@ -3856,11 +3856,6 @@ packages:
         optional: true
       uglify-js:
         optional: true
-
-  terser@5.31.6:
-    resolution: {integrity: sha512-PQ4DAriWzKj+qgehQ7LK5bQqCFNMmlhjR2PFFLuqGCpuCAauxemVBWwWOxo3UIwWQx8+Pr61Df++r76wDmkQBg==}
-    engines: {node: '>=10'}
-    hasBin: true
 
   terser@5.36.0:
     resolution: {integrity: sha512-IYV9eNMuFAV4THUspIRXkLakHnV6XO7FEdtKjf/mDyrnqUg9LnlOn6/RwRvM9SZjR4GUq8Nk8zj67FzVARr74w==}
@@ -5687,14 +5682,14 @@ snapshots:
       '@typescript-eslint/types': 8.4.0
       eslint-visitor-keys: 3.4.3
 
-  '@vitejs/plugin-react@4.3.2(vite@5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.31.6))':
+  '@vitejs/plugin-react@4.3.2(vite@5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.36.0))':
     dependencies:
       '@babel/core': 7.25.8
       '@babel/plugin-transform-react-jsx-self': 7.25.7(@babel/core@7.25.8)
       '@babel/plugin-transform-react-jsx-source': 7.25.7(@babel/core@7.25.8)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.31.6)
+      vite: 5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.36.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -6632,7 +6627,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.9.0: {}
+  globals@15.11.0: {}
 
   globby@11.1.0:
     dependencies:
@@ -8449,14 +8444,6 @@ snapshots:
       terser: 5.36.0
       webpack: 5.94.0
 
-  terser@5.31.6:
-    dependencies:
-      '@jridgewell/source-map': 0.3.6
-      acorn: 8.13.0
-      commander: 2.20.3
-      source-map-support: 0.5.21
-    optional: true
-
   terser@5.36.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
@@ -8793,17 +8780,6 @@ snapshots:
       - sugarss
       - supports-color
       - terser
-
-  vite@5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.31.6):
-    dependencies:
-      esbuild: 0.21.5
-      postcss: 8.4.45
-      rollup: 4.21.2
-    optionalDependencies:
-      '@types/node': 22.5.4
-      fsevents: 2.3.3
-      sass-embedded: 1.78.0
-      terser: 5.31.6
 
   vite@5.4.3(@types/node@22.5.4)(sass-embedded@1.78.0)(terser@5.36.0):
     dependencies:
