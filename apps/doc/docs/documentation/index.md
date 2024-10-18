@@ -37,7 +37,7 @@ Also when dialog require some specific props, we have to pass them to the elemen
 
 ### use-disclosable approach
 
-This library as a slightly different approach:
+This library has a slightly different approach:
 - 1. The disclosable element should be mounted close to the body and not inside page components. Since "disclosable" should appear in the top layer.
 - 2. The disclosable element should be mounted in the component tree only when it's open.
 - 3. The open state of the component tree should be defined by if he is mounted or not 
