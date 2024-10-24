@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.1.1
+
+### Patch Changes
+
+- b06372d: Bump project dependencies
+
 ## 0.1.0
 
 ### Minor Changes

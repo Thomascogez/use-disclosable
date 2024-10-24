@@ -1,5 +1,12 @@
 # playground
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [b06372d]
+  - use-disclosable@0.1.1
+
 ## 0.0.3
 
 ### Patch Changes
