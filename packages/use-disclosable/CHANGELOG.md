@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.2.0
+
+### Minor Changes
+
+- 7976ac2: Remove dependencies to react-dom
+
 ## 0.1.1
 
 ### Patch Changes
