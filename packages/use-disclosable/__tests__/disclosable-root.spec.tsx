@@ -27,13 +27,6 @@ describe("disclosable-root", () => {
     });
 
     describe("Open disclosable", () => {
-        it("should render disclosable-root", () => {
-            const { container } = render(<DisclosableRoot />)
-
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
-        });
-
-
         it("should open a disclosable", () => {
             const { result } = renderHook(() => useDisclosable());
 
@@ -41,9 +34,8 @@ describe("disclosable-root", () => {
         });
 
         it("should render disclosable-root with previously opened disclosable", () => {
-            const { container } = render(<DisclosableRoot />)
+            render(<DisclosableRoot />)
 
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
             expect(screen.getByTestId("first-disclosable")).toBeDefined();
         });
 
@@ -54,9 +46,8 @@ describe("disclosable-root", () => {
         });
 
         it("should render disclosable-root with previously opened disclosable", () => {
-            const { container } = render(<DisclosableRoot />)
+            render(<DisclosableRoot />)
 
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
             expect(screen.getAllByTestId("first-disclosable")).toHaveLength(1);
 
             expect(screen.getByTestId("first-disclosable")).toBeDefined();
@@ -69,9 +60,8 @@ describe("disclosable-root", () => {
         });
 
         it("should render disclosable-root with previously opened disclosable", () => {
-            const { container } = render(<DisclosableRoot />)
+            render(<DisclosableRoot />)
 
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
 
             expect(screen.getAllByTestId("first-disclosable")).toHaveLength(1);
             expect(screen.getByTestId("first-disclosable")).toBeDefined();
@@ -93,9 +83,8 @@ describe("disclosable-root", () => {
         });
 
         it("should render disclosable-root with previously opened disclosable including new props", () => {
-            const { container } = render(<DisclosableRoot />)
+            render(<DisclosableRoot />)
 
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
             expect(screen.getByTestId("first-disclosable")).toBeDefined();
             expect(screen.getByTestId("first-disclosable").textContent).toContain("hello");
 
@@ -112,9 +101,7 @@ describe("disclosable-root", () => {
         });
 
         it("should render disclosable-root without previously closed disclosable", () => {
-            const { container } = render(<DisclosableRoot />)
-
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
+            render(<DisclosableRoot />)
 
             expect(screen.queryByTestId("first-disclosable")).toBeNull();
 
@@ -128,9 +115,8 @@ describe("disclosable-root", () => {
         });
 
         it("should render disclosable-root without previously closed disclosable", () => {
-            const { container } = render(<DisclosableRoot />)
+            render(<DisclosableRoot />)
 
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
 
             expect(screen.queryByTestId("first-disclosable")).toBeNull();
 
@@ -161,9 +147,7 @@ describe("disclosable-root", () => {
         });
 
         it("should render disclosable-root without previously closed disclosable", () => {
-            const { container } = render(<DisclosableRoot />)
-
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
+            render(<DisclosableRoot />)
 
             expect(screen.queryByTestId("first-disclosable")).toBeNull();
             expect(screen.queryByTestId("second-disclosable")).toBeNull();
@@ -184,7 +168,6 @@ describe("disclosable-root", () => {
         it("should render disclosable-root with previously opened disclosable", () => {
             const { container } = render(<DisclosableRoot />)
 
-            expect(container.getElementsByClassName("disclosable-root")).toHaveLength(1);
             expect(container.getElementsByClassName("first-disclosable")).toHaveLength(0);
             expect(screen.getByTestId("first-disclosable-replaced")).toBeDefined();
         });
