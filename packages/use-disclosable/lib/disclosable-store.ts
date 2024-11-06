@@ -96,10 +96,6 @@ export const disclosableStore: DisclosableStore = {
         disclosableStore.subscribers.add(subscriber);
         return () => disclosableStore.subscribers.delete(subscriber);
     },
-    /**
-     * Notify all subscribers
-     * @private
-     */
     notifySubscribers: () => {
         disclosableStore.subscribers.forEach(subscriber => subscriber());
     },

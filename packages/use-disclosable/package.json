@@ -39,8 +39,7 @@
     "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": "*"
   },
   "devDependencies": {
     "react": "^18.3.1",
