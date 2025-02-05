@@ -129,7 +129,7 @@ importers:
         specifier: ^9.19.0
         version: 9.19.0
       '@testing-library/jest-dom':
-        specifier: ^6.6.3
+        specifier: ^6.5.0
         version: 6.6.3
       '@testing-library/react':
         specifier: ^16.2.0
