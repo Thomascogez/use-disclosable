@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.3.0
+
+### Minor Changes
+
+- 69663eb: Bump major project dependencies, move to react 19
+
 ## 0.2.0
 
 ### Minor Changes
