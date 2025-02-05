@@ -1,6 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { render, screen, renderHook, act } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DisclosableRoot } from "../lib/disclosable-root";
@@ -30,7 +29,9 @@ describe("disclosable-root", () => {
         it("should open a disclosable", () => {
             const { result } = renderHook(() => useDisclosable());
 
-            result.current.open(StubDisclosable, { props: { testId: "first-disclosable" } });
+            act(() => {
+                result.current.open(StubDisclosable, { props: { testId: "first-disclosable" } });
+            });
         });
 
         it("should render disclosable-root with previously opened disclosable", () => {
@@ -42,7 +43,9 @@ describe("disclosable-root", () => {
         it("should open an already opened disclosable", () => {
             const { result } = renderHook(() => useDisclosable());
 
-            result.current.open(StubDisclosable, { props: { testId: "first-disclosable" } });
+            act(() => {
+                result.current.open(StubDisclosable, { props: { testId: "first-disclosable" } });
+            });
         });
 
         it("should render disclosable-root with previously opened disclosable", () => {
@@ -55,8 +58,9 @@ describe("disclosable-root", () => {
 
         it("should open a disclosable with a custom identifier", () => {
             const { result } = renderHook(() => useDisclosable());
-
-            result.current.open(StubDisclosable, { props: { testId: "second-disclosable" }, identifier: "custom-identifier" });
+            act(() => {
+                result.current.open(StubDisclosable, { props: { testId: "second-disclosable" }, identifier: "custom-identifier" });
+            });
         });
 
         it("should render disclosable-root with previously opened disclosable", () => {
@@ -74,12 +78,16 @@ describe("disclosable-root", () => {
     describe("Set disclosable props", () => {
         it("should set props on an unknown disclosable identifier", () => {
             const { result } = renderHook(() => useDisclosable());
-            result.current.setProps("unknown-disclosable", { text: "hello" });
+            act(() => {
+                result.current.setProps("unknown-disclosable", { text: "hello" });
+            });
         });
 
         it("should set props on a disclosable using component name", () => {
             const { result } = renderHook(() => useDisclosable());
-            result.current.setProps(StubDisclosable, { text: "hello" });
+            act(() => {
+                result.current.setProps(StubDisclosable, { text: "hello" });
+            });
         });
 
         it("should render disclosable-root with previously opened disclosable including new props", () => {
@@ -96,8 +104,13 @@ describe("disclosable-root", () => {
     describe("Close disclosable", () => {
         it("should close a disclosable", () => {
             const { result } = renderHook(() => useDisclosable());
-            result.current.close(StubDisclosable);
-            vi.runAllTimers();
+            act(() => {
+                result.current.close(StubDisclosable);
+            });
+
+            act(() => {
+                vi.runAllTimers();
+            });
         });
 
         it("should render disclosable-root without previously closed disclosable", () => {
@@ -111,7 +124,9 @@ describe("disclosable-root", () => {
 
         it("should close a disclosable already closed", () => {
             const { result } = renderHook(() => useDisclosable());
-            result.current.close(StubDisclosable);
+            act(() => {
+                result.current.close(StubDisclosable);
+            });
         });
 
         it("should render disclosable-root without previously closed disclosable", () => {
@@ -127,13 +142,17 @@ describe("disclosable-root", () => {
         it("should close a disclosable through injected props", () => {
             const { result } = renderHook(() => useDisclosable());
 
-            result.current.open(StubDisclosable, { props: { testId: "disclosable-injected-props" } });
+            act(() => {
+                result.current.open(StubDisclosable, { props: { testId: "disclosable-injected-props" } });
+            });
 
             expect(screen.queryByTestId("disclosable-injected-props")).toBeDefined();
 
             screen.queryByTestId("close-button")?.click();
 
-            vi.runAllTimers();
+            act(() => {
+                vi.runAllTimers();
+            });
 
             expect(screen.queryByTestId("disclosable-injected-props")).toBeNull();
         });
@@ -142,8 +161,13 @@ describe("disclosable-root", () => {
     describe("Close all disclosables", () => {
         it("should close all disclosables", () => {
             const { result } = renderHook(() => useDisclosable());
-            result.current.closeAll();
-            vi.runAllTimers();
+            act(() => {
+                result.current.closeAll();
+            });
+
+            act(() => {
+                vi.runAllTimers();
+            });
         });
 
         it("should render disclosable-root without previously closed disclosable", () => {
@@ -157,12 +181,16 @@ describe("disclosable-root", () => {
     describe("Open disclosable with replace option", () => {
         it("should open a disclosable with replace option", () => {
             const { result } = renderHook(() => useDisclosable());
-            result.current.open(StubDisclosable, { props: { testId: "first-disclosable" }, replace: true });
+            act(() => {
+                result.current.open(StubDisclosable, { props: { testId: "first-disclosable" }, replace: true });
+            });
         });
 
         it("should open same disclosable with replace option", () => {
             const { result } = renderHook(() => useDisclosable());
-            result.current.open(StubDisclosable, { props: { testId: "first-disclosable-replaced" }, replace: true });
+            act(() => {
+                result.current.open(StubDisclosable, { props: { testId: "first-disclosable-replaced" }, replace: true });
+            });
         });
 
         it("should render disclosable-root with previously opened disclosable", () => {
