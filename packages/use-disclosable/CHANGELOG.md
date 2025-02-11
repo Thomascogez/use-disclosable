@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.3.1
+
+### Patch Changes
+
+- a5c51a6: Bump dependencies
+
 ## 0.3.0
 
 ### Minor Changes
