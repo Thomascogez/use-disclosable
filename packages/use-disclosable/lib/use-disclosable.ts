@@ -4,10 +4,11 @@ import { disclosableStore } from "./disclosable-store";
 import type { DisclosableStore } from "./types";
 
 // This allow to make next.js build work
-const stubServerSnapshot = (): DisclosableStore["disclosables"] => ({});
+const stubServerSnapshotResult = {};
+const getStubServerSnapshot = (): DisclosableStore["disclosables"] => stubServerSnapshotResult;
 
 export const useDisclosable = () => {
-    const disclosables = useSyncExternalStore(disclosableStore.subscribe, disclosableStore.getDisclosables, stubServerSnapshot);
+    const disclosables = useSyncExternalStore(disclosableStore.subscribe, disclosableStore.getDisclosables, getStubServerSnapshot);
 
     return {
         disclosables,
