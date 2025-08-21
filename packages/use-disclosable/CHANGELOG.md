@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.3.2
+
+### Patch Changes
+
+- 86a88f2: Improve dx for next.js
+
 ## 0.3.1
 
 ### Patch Changes
