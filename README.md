@@ -45,19 +45,17 @@ const App = () => {
 
 ### 3. Update your disclosable element
 
-Now you can update your disclosable element in order to make it `react` to disclosable events.
+Now you can update your disclosable element in order to make connect it to disclosable events.
 
-```tsx {7} filename="MyDisclosableElement.tsx"
+```tsx {7} filename="MyDialogElement.tsx"
 import type { DisclosableInjectedProps } from 'use-disclosable';
 import { Dialog } from "my-awesome-library";
-
-import MyDialogElement from './MyDialogElement';
 
 type MyDialogElementProps = {
     title: string;
 } & DisclosableInjectedProps
 
-const MyDialogElement: React.FC<MyDialogElementProps> = ({ title, isDisclosableOpen, closeDisclosable }) => {
+export const MyDialogElement: React.FC<MyDialogElementProps> = ({ title, isDisclosableOpen, closeDisclosable }) => {
     return (
         <Dialog isOpen={isDisclosableOpen} onOpenChange={(isOpen) => !isOpen && closeDisclosable()}>
             <h1>{title}</h1>
@@ -70,16 +68,17 @@ const MyDialogElement: React.FC<MyDialogElementProps> = ({ title, isDisclosableO
 
 Now you can use the `useDisclosable` hook to manage your disclosable element, anywhere in your application.
 
-```tsx {7} filename="MyDisclosableElement.tsx"
+```tsx {7} filename="Demo.tsx"
 import { useDisclosable } from 'use-disclosable';
 import MyDialogElement from './MyDialogElement';
 
-const MyDisclosableElement = () => {
+const Demo = () => {
     const { open } = useDisclosable();
 
     return (
         <div>
-            <button onClick={() => open(MyDialogElement, {props: {title: "Hello"}})}>Open My dialog</button>
+            <button onClick={() => open(MyDialogElement, { props: { title: "Hello" } } )}>Open My dialog</button>
         </div>
     )
 }
+```
