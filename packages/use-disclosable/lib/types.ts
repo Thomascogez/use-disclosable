@@ -17,14 +17,15 @@ export type OpenDisclosableOptions<T extends AnyReactComponent, P = Omit<Compone
 
 export type CloseDisclosableOptions = {
     destroyAfter?: number;
+    closeReason?: string;
 }
 
 export type DisclosableStore = {
     subscribers: Set<() => void>;
-    disclosables: Record<string, Disclosable<AnyReactComponent>>;
+    disclosables: Record<string, Disclosable<AnyReactComponent> & {"~openPromiseResolver": PromiseWithResolvers<string | undefined>}>;
     disclosablesIndex: number;
     getDisclosables: () => DisclosableStore["disclosables"];
-    openDisclosable: <T extends AnyReactComponent>(component: T, options?: OpenDisclosableOptions<T>) => void;
+    openDisclosable: <T extends AnyReactComponent>(component: T, options?: OpenDisclosableOptions<T>) => Promise<string | undefined>;
     closeDisclosable: <T extends AnyReactComponent>(component: T | string, options?: CloseDisclosableOptions) => void;
     closeAllDisclosables: (options?: CloseDisclosableOptions) => void;
     subscribe: (callback: () => void) => () => void;

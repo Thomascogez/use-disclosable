@@ -207,4 +207,86 @@ describe('useDisclosable', () => {
         expect(result.current.disclosables).toMatchObject({});
     });
 
+
+    it("should open a disclosable and return a promise that should resolve after closing", async () => {
+        const { result } = renderHook(() => useDisclosable());
+
+        let openPromise: Promise<string | undefined> | undefined = undefined;
+
+        act(() => {
+            openPromise = result.current.open(StubDisclosable);
+        });
+
+        expect(result.current.disclosables).to.have.property(StubDisclosable.name)
+        expect(result.current.disclosables[StubDisclosable.name]).to.be.an('object')
+
+        expect(openPromise).to.toBeInstanceOf(Promise);
+
+        act(() => {
+            result.current.close(StubDisclosable);
+        })
+
+        act(() => {
+            vi.runAllTimers();
+        });
+
+        expect(result.current.disclosables).to.not.have.property(StubDisclosable.name);
+
+        await expect(openPromise).resolves.toBeUndefined()
+    });
+
+    it("should open a disclosable and return a promise that should resolve after closing with a given reason", async () => {
+        const { result } = renderHook(() => useDisclosable());
+
+        let openPromise: Promise<string | undefined> | undefined = undefined;
+
+        act(() => {
+            openPromise = result.current.open(StubDisclosable);
+        });
+
+        expect(result.current.disclosables).to.have.property(StubDisclosable.name)
+        expect(result.current.disclosables[StubDisclosable.name]).to.be.an('object')
+
+        expect(openPromise).to.toBeInstanceOf(Promise);
+
+        act(() => {
+            result.current.close(StubDisclosable, {closeReason: "custom reason"});
+        })
+
+        act(() => {
+            vi.runAllTimers();
+        });
+
+        expect(result.current.disclosables).to.not.have.property(StubDisclosable.name);
+
+        await expect(openPromise).resolves.toBe("custom reason")
+    });
+
+    it("should open a disclosable and return a promise that should resolve after closing with a given reason (using closeAll)", async () => {
+        const { result } = renderHook(() => useDisclosable());
+
+        let openPromise: Promise<string | undefined> | undefined = undefined;
+
+        act(() => {
+            openPromise = result.current.open(StubDisclosable);
+        });
+
+        expect(result.current.disclosables).to.have.property(StubDisclosable.name)
+        expect(result.current.disclosables[StubDisclosable.name]).to.be.an('object')
+
+        expect(openPromise).to.toBeInstanceOf(Promise);
+
+        act(() => {
+            result.current.closeAll({closeReason: "custom reason"});
+        })
+
+        act(() => {
+            vi.runAllTimers();
+        });
+
+        expect(result.current.disclosables).to.not.have.property(StubDisclosable.name);
+
+        await expect(openPromise).resolves.toBe("custom reason")
+    });
+
 })
