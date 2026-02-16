@@ -1,5 +1,11 @@
 # use-disclosable
 
+## 0.4.0
+
+### Minor Changes
+
+- de6db21: Open now return a promise that resolved when element closes
+
 ## 0.3.2
 
 ### Patch Changes
