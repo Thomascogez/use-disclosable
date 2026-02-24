@@ -1,0 +1,188 @@
+import { Callout } from "@rspress/core/theme-original";
+
+# Advanced Usage
+
+Deep dive into advanced patterns and techniques for `use-disclosable`.
+
+## Promise-Based Workflows
+
+The `open()` function returns a Promise that resolves when the dialog is closed. This enables clean, linear code flow:
+
+```tsx filename="Page.tsx"
+const { open } = useDisclosable();
+
+// Async/await style
+const result = await open(MyDialog, { props: { title: "Hello" } });
+
+// The code below only executes after the dialog closes
+console.log("Dialog closed with:", result);
+```
+
+### How It Works
+
+1. `open()` creates the dialog and returns a pending Promise
+2. The Promise stays pending until `closeDisclosable()` is called
+3. The resolved value is passed via the `closeReason` parameter
+
+```tsx filename="MyDialog.tsx"
+export const MyDialog: React.FC<Props> = ({ closeDisclosable }) => {
+  const handleConfirm = () => {
+    // Pass data back through closeReason
+    closeDisclosable({ closeReason: "user_confirmed" });
+  };
+
+  const handleCancel = () => {
+    closeDisclosable({ closeReason: "user_cancelled" });
+  };
+
+  // ...
+};
+```
+
+## Close Reasons
+
+Use `closeReason` to signal how the dialog was closed:
+
+```tsx
+// In your dialog component
+closeDisclosable({ closeReason: "confirm" });
+closeDisclosable({ closeReason: "cancel" });
+closeDisclosable({ closeReason: "backdrop_clicked" });
+```
+
+### Common Patterns
+
+**Confirmation Flow:**
+
+```tsx
+const result = await open(ConfirmDialog, {
+  props: { title: "Delete account?", message: "This action cannot be undone." },
+});
+
+if (result === "confirm") {
+  await deleteAccount();
+} else {
+  // User cancelled
+}
+```
+
+## Animation Handling
+
+Use `destroyAfter` to delay unmounting for exit animations:
+
+```tsx filename="MyDialog.tsx"
+export const MyDialog: React.FC<Props> = ({ closeDisclosable }) => {
+  const handleClose = () => {
+    // Wait for CSS animation to complete
+    closeDisclosable({ destroyAfter: 300 });
+  };
+
+  return (
+    <Dialog
+      open={isDisclosableOpen}
+      onOpenChange={(open) => !open && handleClose()}
+    >
+      {/* Dialog content with CSS transitions */}
+    </Dialog>
+  );
+};
+```
+
+**With close/closeAll:**
+
+```tsx
+// Close with animation delay
+close(MyDialog, { destroyAfter: 300 });
+
+// Close all with animation delay
+closeAll({ destroyAfter: 500 });
+```
+
+## Multiple Dialogs
+
+### Stacking Dialogs
+
+```tsx
+const { open } = useDisclosable();
+
+const handleFlow = async () => {
+  // First dialog
+  await open(Step1Dialog, {
+    identifier: "wizard-step-1",
+    props: { step: 1 },
+  });
+
+  // Second dialog
+  await open(Step2Dialog, {
+    identifier: "wizard-step-2",
+    props: { step: 2 },
+  });
+
+  // Third dialog
+  await open(Step3Dialog, {
+    identifier: "wizard-step-3",
+    props: { step: 3 },
+  });
+};
+```
+
+### Replacing Dialogs
+
+Use `replace: true` to replace an existing dialog:
+
+```tsx
+// First open
+open(MyDialog, { identifier: "dynamic-dialog" });
+
+// Later, replace with new content
+open(MyDialog, {
+  identifier: "dynamic-dialog",
+  replace: true, // Replaces existing dialog with same ID
+  props: { newData: "updated" },
+});
+```
+
+## Server Components (Next.js)
+
+`use-disclosable` works with Next.js App Router:
+
+```tsx filename="app/layout.tsx"
+import { DisclosableRoot } from "use-disclosable";
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html>
+      <body>
+        {children}
+        <DisclosableRoot />
+      </body>
+    </html>
+  );
+}
+```
+
+```tsx filename="app/page.tsx"
+"use client";
+
+import { useDisclosable } from "use-disclosable";
+
+export default function Page() {
+  const { open } = useDisclosable();
+
+  const handleClick = async () => {
+    const result = await open(MyDialog, { props: { title: "Hello" } });
+    console.log(result);
+  };
+
+  return <button onClick={handleClick}>Open</button>;
+}
+```
+
+<Callout type="info">
+  The `DisclosableRoot` component has `"use client"` directive built-in, so it
+  works seamlessly with Server Components.
+</Callout>

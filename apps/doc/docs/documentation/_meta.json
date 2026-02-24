@@ -1,10 +1,13 @@
 [
-    "index",
-    "quick-start",
-    {
-        "type": "dir",
-        "name": "api",
-        "label": "API"
-    },
-    "showcase"
+  "index",
+  "quick-start",
+  "recipes",
+  "advanced-usage",
+  "faq",
+  {
+    "type": "dir",
+    "name": "api",
+    "label": "API"
+  },
+  "showcase"
 ]

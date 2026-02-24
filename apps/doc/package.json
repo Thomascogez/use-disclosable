@@ -1,6 +1,7 @@
 {
   "name": "documentation",
   "version": "0.0.1",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "rspress dev",
@@ -8,8 +9,10 @@
     "preview": "rspress preview"
   },
   "dependencies": {
+    "@rspress/core": "^2.0.3",
     "lucide-react": "^0.475.0",
-    "rspress": "^1.28.0"
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@types/node": "^22.0.0"

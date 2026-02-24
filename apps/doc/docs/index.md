@@ -15,13 +15,22 @@ hero:
     src: /logo.png
     alt: use-disclosable Logo
 features:
-  - title: Framework agnostic
-    details: use-disclosable is designed with flexibility in mind, allowing you to use it with any framework or implementing your own disclosable component.
+  - title: Promise-based API
+    details: Get results directly from your dialogs with async/await. No callbacks or state management needed.
+    icon: ✨
+  - title: Framework Agnostic
+    details: Works seamlessly with any UI library (Radix, Shadcn, Headless UI, custom components).
     icon: 📚
-  - title: Type safe
-    details: Built with TypeScript, use-disclosable provides strong type safety for your disclosable components, ensuring that props are correctly typed and handled.
+  - title: Type Safe
+    details: Full TypeScript support with complete type inference for props and return values.
     icon: 🔗
-  - title: Zero dependencies
-    details: use-disclosable has no external dependencies, making it easy to integrate into your project.
+  - title: Zero Dependencies
+    details: Lightweight with no external runtime dependencies. Just React.
     icon: 💪
+  - title: Global State
+    details: Open dialogs from anywhere without prop drilling. Built-in support for multiple instances.
+    icon: 🌐
+  - title: Animation Ready
+    details: Built-in support for exit animations with destroyAfter option.
+    icon: 🎬
 ---

@@ -1,128 +1,255 @@
-# use-disclosable
+# useDisclosable
 
-The `use-disclosable` hook is the way to interact with the disclosable system.
+The `useDisclosable` hook is the primary way to interact with the disclosable system.
 
 ## API
-### open
-Allow to open a disclosable. 
-#### Parameters
-- `disclosable`: The disclosable component to open or the disclosable identifier.
-- `options`: An object containing the options for the disclosable.
-  - `options.props`: An object containing the props to pass to the disclosable.
-  - `options.identifier`: An optional identifier for the disclosable. If not provided, the disclosable will be opened using the component name (usally used to display to component of the same type)
-  - `options.replace`: An optional boolean indicating if the disclosable should be replaced if it's already opened. (default false)
-#### Usage
+
+```tsx
+const { open, close, closeAll, setProps, disclosables } = useDisclosable();
+```
+
+---
+
+## open
+
+Opens a disclosable component and returns a Promise that resolves when the dialog is closed.
+
+```ts
+open(component: ReactComponent, options?: OpenDisclosableOptions): Promise<string | undefined>
+```
+
+### Parameters
+
+| Parameter   | Type                     | Description                       |
+| ----------- | ------------------------ | --------------------------------- |
+| `component` | `React.FC`               | The disclosable component to open |
+| `options`   | `OpenDisclosableOptions` | Optional configuration            |
+
+### Options
+
+```ts
+interface OpenDisclosableOptions<T> {
+  props?: Partial<ComponentProps<T>>; // Props to pass to the component
+  identifier?: string; // Custom ID (defaults to component name)
+  replace?: boolean; // Replace existing dialog with same ID (default: false)
+  dismountOnClose?: boolean; // Unmount on close (default: true)
+}
+```
+
+### Return Value
+
+Returns a `Promise<string | undefined>` that:
+
+- Resolves with the `closeReason` passed to `closeDisclosable()` when the dialog closes
+- Resolves with `undefined` if closed without a reason
+- Resolves with `undefined` if a dialog with the same identifier is already open (when `replace: false`)
+
+### Usage
+
 ```tsx filename="MyComponent.tsx"
-import { useDisclosable } from 'use-disclosable';
-import DisclosableComponent from './DisclosableComponent';
+import { useDisclosable } from "use-disclosable";
+import ConfirmationDialog from "./ConfirmationDialog";
+
 const Component: React.FC = () => {
   const { open } = useDisclosable();
 
-  return (
-    <button onClick={() => open(DisclosableComponent, { props: { text: 'Hello' } })}>
-      Open disclosable
-    </button>
-  );
+  const handleDelete = async () => {
+    // Wait for user to respond
+    const result = await open(ConfirmationDialog, {
+      props: {
+        title: "Delete Item",
+        message: "Are you sure?",
+      },
+    });
+
+    if (result === "confirm") {
+      // User confirmed
+      await deleteItem();
+    }
+  };
+
+  return <button onClick={handleDelete}>Delete</button>;
 };
 ```
 
-### close
-Allow to close an opened disclosable.
-#### Parameters
-- `disclosable`: The disclosable component to close or the disclosable identifier.
-- `options`: An object containing the options for the disclosable.
-  - `options.destroyAfter`: An optional number indicating the delay in milliseconds before destroying the disclosable. (useful for animations)
+### With Custom Identifier
 
-#### Usage
+```tsx
+// Open with custom ID
+await open(MyDialog, {
+  identifier: "unique-id",
+  props: { title: "Hello" },
+});
+
+// Open again with same ID (will be ignored by default)
+await open(MyDialog, {
+  identifier: "unique-id",
+  props: { title: "World" },
+});
+
+// Replace existing dialog
+await open(MyDialog, {
+  identifier: "unique-id",
+  replace: true, // This will replace the existing one
+  props: { title: "New Content" },
+});
+```
+
+---
+
+## close
+
+Closes a specific disclosable by component or identifier.
+
+```ts
+close(identifier: string | ReactComponent, options?: CloseDisclosableOptions): void
+```
+
+### Parameters
+
+| Parameter    | Type                       | Description                          |
+| ------------ | -------------------------- | ------------------------------------ |
+| `identifier` | `string \| ReactComponent` | The component or identifier to close |
+| `options`    | `CloseDisclosableOptions`  | Optional configuration               |
+
+### Options
+
+```ts
+interface CloseDisclosableOptions {
+  closeReason?: string; // Reason/message passed back to the Promise
+  destroyAfter?: number; // Delay in ms before unmounting (for animations)
+}
+```
+
+### Usage
+
 ```tsx filename="MyComponent.tsx"
-import { useDisclosable } from 'use-disclosable';
-import DisclosableComponent from './DisclosableComponent';
-const Component: React.FC = () => {
-  const { open, close } = useDisclosable();
+const { open, close } = useDisclosable();
 
-  return (
-    <>
-      <button onClick={() => open(DisclosableComponent, { props: { text: 'Hello' } })}>
-        Open disclosable
-      </button>
-      <button onClick={() => close(DisclosableComponent)}>
-        Close disclosable
-      </button>
-    </>
-  );
+// Open a dialog
+await open(MyDialog, { props: { title: "Hello" } });
+
+// Close it programmatically with a reason
+close(MyDialog, { closeReason: "saved", destroyAfter: 300 });
+
+// Or close by identifier
+close("my-dialog-identifier", { closeReason: "cancelled" });
+```
+
+---
+
+## closeAll
+
+Closes all currently open disclosables.
+
+```ts
+closeAll(options?: CloseDisclosableOptions): void
+```
+
+### Parameters
+
+| Parameter | Type                      | Description                                     |
+| --------- | ------------------------- | ----------------------------------------------- |
+| `options` | `CloseDisclosableOptions` | Optional configuration (applies to all dialogs) |
+
+### Usage
+
+```tsx filename="MyComponent.tsx"
+const { open, closeAll } = useDisclosable();
+
+// Open multiple dialogs
+await open(Dialog1);
+await open(Dialog2);
+await open(Dialog3);
+
+// Close all at once
+closeAll({ closeReason: "navigating_away", destroyAfter: 500 });
+```
+
+---
+
+## setProps
+
+Updates the props of an already-open disclosable.
+
+```ts
+setProps(identifier: string | ReactComponent, props: Partial<ComponentProps<T>>): void
+```
+
+### Parameters
+
+| Parameter    | Type                         | Description                 |
+| ------------ | ---------------------------- | --------------------------- |
+| `identifier` | `string \| ReactComponent`   | The component or identifier |
+| `props`      | `Partial<ComponentProps<T>>` | Props to update             |
+
+### Usage
+
+```tsx filename="MyComponent.tsx"
+const { open, setProps } = useDisclosable();
+
+// Open dialog
+await open(DetailsDialog, {
+  identifier: "item-details",
+  props: { itemId: null },
+});
+
+// Update props later
+setProps("item-details", { itemId: 123 });
+
+// Or using the component
+setProps(DetailsDialog, { itemId: 456 });
+```
+
+---
+
+## disclosables
+
+An object containing all currently open disclosables. Useful for debugging or building custom UI.
+
+```ts
+disclosables: Record<string, Disclosable>;
+```
+
+### Usage
+
+```tsx filename="DebugPanel.tsx"
+const { open, disclosables } = useDisclosable();
+
+return (
+  <div>
+    <p>Open dialogs: {Object.keys(disclosables).length}</p>
+    <ul>
+      {Object.entries(disclosables).map(([id, d]) => (
+        <li key={id}>{id}</li>
+      ))}
+    </ul>
+  </div>
+);
+```
+
+---
+
+## TypeScript Types
+
+### OpenDisclosableOptions
+
+```ts
+type OpenDisclosableOptions<
+  T extends AnyReactComponent,
+  P = Omit<ComponentProps<T>, keyof DisclosableInjectedProps>,
+> = (IsEmptyObject<P> extends true ? { props?: P } : { props: P }) & {
+  identifier?: string;
+  dismountOnClose?: boolean;
+  replace?: boolean;
 };
 ```
 
-### closeAll
-Allow to close all opened disclosables.
-#### Parameters
-- `options`: An object containing the options for the disclosable.
-  - `options.destroyAfter`: An optional number indicating the delay in milliseconds before destroying the disclosable. (useful for animations)
+### CloseDisclosableOptions
 
-#### Usage
-```tsx filename="MyComponent.tsx"
-import { useDisclosable } from 'use-disclosable';
-import DisclosableComponent from './DisclosableComponent';
-const Component: React.FC = () => {
-  const { open, closeAll } = useDisclosable();
-
-  return (
-    <>
-      <button onClick={() => open(DisclosableComponent, { props: { text: 'Hello' } })}>
-        Open disclosable
-      </button>
-      <button onClick={() => closeAll()}>
-        Close all disclosables
-      </button>
-    </>
-  );
+```ts
+type CloseDisclosableOptions = {
+  destroyAfter?: number; // Delay before unmounting (ms)
+  closeReason?: string; // Value passed to the Promise
 };
 ```
-
-### setProps
-Allow to set props on an opened disclosable.
-#### Parameters
-- `disclosable`: The disclosable component to set props on or the disclosable identifier.
-- `props`: An object containing the props to set on the disclosable.
-
-#### Usage
-```tsx filename="MyComponent.tsx"
-import { useDisclosable } from 'use-disclosable';
-import DisclosableComponent from './DisclosableComponent';
-const Component: React.FC = () => {
-  const { open, setProps } = useDisclosable();
-
-  return (
-    <>
-      <button onClick={() => open(DisclosableComponent, { props: { text: 'Hello' } })}>
-        Open disclosable
-      </button>
-      <button onClick={() => setProps(DisclosableComponent, { text: 'World' })}>
-        Set props on disclosable
-      </button>
-    </>
-  );
-};
-```
-
-### disclosables
-An object containing all the opened disclosables.
-
-#### Usage
-```tsx filename="MyComponent.tsx"
-import { useDisclosable } from 'use-disclosable';
-import DisclosableComponent from './DisclosableComponent';
-const App: React.FC = () => {
-  const { open, disclosables } = useDisclosable();
-
-  return (
-    <>
-      <button onClick={() => open(DisclosableComponent, { props: { text: 'Hello' } })}>
-        Open disclosable
-      </button>
-      <button onClick={() => console.log(disclosables)}>
-        Log disclosables
-      </button>
-    </>
-  );
-};

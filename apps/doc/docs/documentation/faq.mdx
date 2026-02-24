@@ -1,0 +1,254 @@
+import { Callout } from "@rspress/core/theme-original";
+
+# FAQ
+
+Frequently asked questions about `use-disclosable`.
+
+## General
+
+### What is use-disclosable?
+
+`use-disclosable` is a React library that provides a declarative way to manage dialogs, modals, drawers, and other "disclosable" UI elements. It uses a global store pattern so you can open dialogs from anywhere without prop drilling.
+
+### What are "disclosable elements"?
+
+Disclosable elements are UI components that appear temporarily and then disappear. Common examples include:
+
+- Modals / Dialogs
+- Drawers / Side panels
+- Popovers / Tooltips
+- Confirmation dialogs
+- Toast notifications
+
+### Why not just use React Context or Portals?
+
+**Traditional approach:**
+
+```tsx
+// Without use-disclosable
+const [isOpen, setIsOpen] = useState(false);
+return (
+  <>
+    <button onClick={() => setIsOpen(true)}>Open</button>
+    <MyDialog isOpen={isOpen} onClose={() => setIsOpen(false)} />
+  </>
+);
+```
+
+**With use-disclosable:**
+
+```tsx
+// With use-disclosable
+const { open } = useDisclosable();
+return <button onClick={() => open(MyDialog)}>Open</button>;
+```
+
+Key differences:
+
+- No local state management needed
+- Dialogs render at the top level
+- Built-in Promise support for getting results
+- Multiple dialog instances supported out of the box
+- Works from anywhere in your component tree
+
+## Installation & Setup
+
+### How do I install use-disclosable?
+
+```bash
+npm install use-disclosable
+# or
+pnpm add use-disclosable
+# or
+yarn add use-disclosable
+```
+
+### Where should I place DisclosableRoot?
+
+Place `<DisclosableRoot />` once at the root of your application, ideally right before the closing `</body>` tag:
+
+```tsx filename="App.tsx"
+import { DisclosableRoot } from "use-disclosable";
+
+function App() {
+  return (
+    <>
+      <YourAppContent />
+      <DisclosableRoot />
+    </>
+  );
+}
+```
+
+### Do I need to wrap my dialog components?
+
+Yes, you need to accept the injected props from `use-disclosable`:
+
+```tsx filename="MyDialog.tsx"
+import type { DisclosableInjectedProps } from "use-disclosable";
+
+type MyDialogProps = {
+  title: string;
+} & DisclosableInjectedProps;
+
+export const MyDialog: React.FC<MyDialogProps> = ({
+  title,
+  isDisclosableOpen,
+  closeDisclosable,
+}) => {
+  return (
+    <Dialog
+      open={isDisclosableOpen}
+      onOpenChange={(open) => !open && closeDisclosable()}
+    >
+      <h1>{title}</h1>
+    </Dialog>
+  );
+};
+```
+
+## Usage
+
+### How do I get data back from a dialog?
+
+Use the `closeReason` parameter:
+
+```tsx filename="MyDialog.tsx"
+const handleConfirm = () => {
+  closeDisclosable({ closeReason: "confirmed" });
+};
+
+const handleCancel = () => {
+  closeDisclosable({ closeReason: "cancelled" });
+};
+
+// Usage
+const result = await open(MyDialog);
+// result will be "confirmed" or "cancelled"
+```
+
+### Can I use multiple dialogs at once?
+
+Yes! Use custom identifiers:
+
+```tsx
+open(MyDialog, { identifier: "dialog-1" });
+open(MyDialog, { identifier: "dialog-2" });
+```
+
+### How do I update dialog props after opening?
+
+Use `setProps`:
+
+```tsx
+const { open, setProps } = useDisclosable();
+
+// Open dialog
+open(MyDialog, { identifier: "my-dialog", props: { step: 1 } });
+
+// Later, update props
+setProps("my-dialog", { step: 2 });
+```
+
+### How do I handle animations?
+
+Use `destroyAfter` to delay unmounting:
+
+```tsx
+closeDisclosable({ destroyAfter: 300 }); // Wait 300ms before unmounting
+```
+
+## Framework Compatibility
+
+### Does it work with Next.js?
+
+Yes! `use-disclosable` works with both Pages Router and App Router.
+
+```tsx filename="app/layout.tsx"
+import { DisclosableRoot } from "use-disclosable";
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <DisclosableRoot />
+      </body>
+    </html>
+  );
+}
+```
+
+<Callout type="info">
+  `DisclosableRoot` has `"use client"` built-in, so it works seamlessly with
+  Server Components.
+</Callout>
+
+### Does it work with React Server Components?
+
+The hook itself requires a client component, but `DisclosableRoot` can be rendered in server components because it includes the necessary `"use client"` directive.
+
+### What UI libraries does it work with?
+
+`use-disclosable` is framework-agnostic and works with any UI library:
+
+- Shadcn UI / Radix UI
+- Headless UI
+- MUI
+- Chakra UI
+- Custom components
+- And more!
+
+### Does it work with React 18?
+
+Yes, it's compatible with React 18 and React 19.
+
+## Performance
+
+### Is use-disclosable performant?
+
+Yes! Here's why:
+
+- **Zero dependencies** - No extra bundle size from third-party libs
+- **~1KB gzipped** - Extremely lightweight
+- **useSyncExternalStore** - Uses React's built-in state management for optimal performance
+- **Memoization** - Components are automatically memoized
+
+### Are there any re-render concerns?
+
+The library uses `useSyncExternalStore` which is React's recommended pattern for external state. Re-renders are minimal and optimized.
+
+## Troubleshooting
+
+### My dialog doesn't close when clicking outside
+
+Make sure your dialog component handles the `onOpenChange` event:
+
+```tsx
+<Dialog
+  open={isDisclosableOpen}
+  onOpenChange={(open) => !open && closeDisclosable()}
+/>
+```
+
+### The dialog flashes when opening
+
+This is usually a CSS issue. Check that your dialog has proper initial styles and animations.
+
+### Promise doesn't resolve
+
+Make sure you're calling `closeDisclosable()` (not just closing the underlying dialog component).
+
+### Dialog not appearing
+
+Ensure `<DisclosableRoot />` is rendered in your app and is not conditional (it should always render).
+
+## Contributing
+
+### How can I contribute?
+
+Check out the [GitHub repository](https://github.com/Thomascogez/use-disclosable) for contribution guidelines.
+
+### Where can I report bugs?
+
+Please open an issue at https://github.com/Thomascogez/use-disclosable/issues
