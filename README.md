@@ -120,30 +120,6 @@ const Page = () => {
 };
 ```
 
-## Promise-Based Dialogs
-
-The standout feature of `use-disclosable` is the promise-based workflow:
-
-```tsx
-// Open a confirmation dialog and get the user's choice
-const confirmed = await open(ConfirmationDialog, {
-  props: { title: "Delete this item?" },
-});
-
-if (confirmed === "confirm") {
-  // User confirmed
-}
-
-// Open a form dialog and get the form data
-const formData = await open(FormDialog, {
-  props: { initialValues: { name: "" } },
-});
-
-if (formData) {
-  // User submitted form with data
-}
-```
-
 ## Usage with Popular UI Libraries
 
 ### Shadcn UI / Radix
